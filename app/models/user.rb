@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :confirmable,
     :rememberable, :trackable, :validatable
 
+  geocoded_by :current_location
+  reverse_geocoded_by :latitude, :longitude, if: :address_changed?
+  after_validation :geocode, :reverse_geocode
+
   has_many :invoices, dependent: :destroy
   has_many :active_reviews, class_name: "Review", foreign_key: "owner_id",
     dependent: :destroy

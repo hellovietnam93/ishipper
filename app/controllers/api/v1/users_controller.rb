@@ -2,15 +2,19 @@ class Api::V1::UsersController < Api::BaseController
   before_action :ensure_params_exist
   before_action :find_user, only: :update
   before_action :correct_user, only: :update
+  before_action :ensure_params_exist, only: [:index, :update]
 
   def index
-    users = if current_user.shop?
-      User.shipper
-    elsif current_user.shipper?
-      User.shop
+    users = User.near [params[:user][:latitude], params[:user][:longitude]],
+      params[:user][:distance]
+    users = users.shipper
+    if users.any?
+      render json: {message: I18n.t("users.messages.get_shipper_success"),
+        data: {users: users}, code: 1}, status: 200
+    else
+      render json: {message: I18n.t("users.messages.get_shipper_fails"),
+        data: {}, code: 1}, status: 200
     end
-
-    render json: {message: "", data: {users: users}, code: 1}, status: 200
   end
 
   def update

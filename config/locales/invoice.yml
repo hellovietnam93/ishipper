@@ -1,0 +1,5 @@
+en:
+  invoices:
+    messages:
+      get_invoices_success: "Get invoices success"
+      get_invoices_fails: "No invoices around here"

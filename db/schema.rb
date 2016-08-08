@@ -14,9 +14,10 @@ ActiveRecord::Schema.define(version: 20160803021915) do
 
   create_table "invoices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
-    t.string   "address"
+    t.string   "address_start"
     t.float    "latitude_start",   limit: 24
     t.float    "longitude_start",  limit: 24
+    t.string   "address_finish"
     t.float    "latitude_finish",  limit: 24
     t.float    "longitude_finish", limit: 24
     t.string   "delivery_time"
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160803021915) do
     t.string   "name"
     t.string   "email"
     t.string   "address"
+    t.string   "current_location"
     t.float    "latitude",               limit: 24
     t.float    "longitude",              limit: 24
     t.string   "phone_number"
